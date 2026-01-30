@@ -1,0 +1,245 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "skip": "Skip",
+    "yes": "Yes",
+    "no": "No"
+  },
+
+  "auth": {
+    "welcome_title": "Welcome to Soomi",
+    "welcome_subtitle": "Your path to better sleep",
+    "email_placeholder": "Enter your email",
+    "send_magic_link": "Send login link",
+    "check_email": "Check your email",
+    "magic_link_sent": "We sent a login link to {{email}}",
+    "link_expired": "This link has expired",
+    "request_new_link": "Request a new link"
+  },
+
+  "home": {
+    "greeting_morning": "Good morning",
+    "greeting_afternoon": "Good afternoon",
+    "greeting_evening": "Good evening",
+    "last_night": "Last night",
+    "weekly_average": "7-day average",
+    "hours_slept": "{{hours}}h {{minutes}}m",
+    "streak_days": "{{count}} day streak",
+    "streak_days_plural": "{{count}} day streak",
+    "quick_actions": "Quick actions",
+    "track_sleep": "Track sleep",
+    "play_sounds": "Sleep sounds",
+    "your_program": "Your program"
+  },
+
+  "tracking": {
+    "title": "Sleep tracking",
+    "manual_entry": "Manual entry",
+    "wearable_sync": "Wearable sync",
+    "last_sync": "Last synced {{time}}",
+    "sync_now": "Sync now",
+    "syncing": "Syncing...",
+    "sync_success": "{{count}} nights synced",
+    "bedtime_label": "Went to bed",
+    "waketime_label": "Woke up",
+    "awakenings_label": "Times woken up",
+    "quality_label": "How did you sleep?",
+    "quality_1": "Very poor",
+    "quality_2": "Poor",
+    "quality_3": "Okay",
+    "quality_4": "Good",
+    "quality_5": "Excellent"
+  },
+
+  "sounds": {
+    "title": "Sleep sounds",
+    "ocean_calm": "Calm Ocean",
+    "ocean_waves": "Ocean Waves",
+    "ocean_storm": "Distant Storm",
+    "timer_label": "Timer",
+    "timer_minutes": "{{minutes}} min",
+    "fade_out": "Fade out",
+    "now_playing": "Now playing"
+  },
+
+  "insights": {
+    "title": "Insights",
+    "this_week": "This week",
+    "total_sleep": "Total sleep",
+    "time_to_fall_asleep": "Time to fall asleep",
+    "awakenings": "Awakenings",
+    "trend_improving": "Improving",
+    "trend_stable": "Stable",
+    "trend_declining": "Needs attention"
+  },
+
+  "program": {
+    "title": "14-Day Sleep Reset",
+    "day_x_of_14": "Day {{day}} of 14",
+    "today_action": "Today's action",
+    "action_complete": "Mark complete",
+    "action_completed": "Completed!",
+    "daily_checkin": "Daily check-in",
+    "checkin_time": "~30 seconds",
+    "checkin_done": "Check-in complete",
+    "report_available": "Your report is ready!",
+    "view_report": "View report",
+    "not_started": "Not started yet",
+    "start_program": "Start your reset",
+    "price": "€199"
+  },
+
+  "checkin": {
+    "title": "Daily check-in",
+    "q_sleep_quality": "How did you sleep last night?",
+    "q_energy": "How's your energy today?",
+    "q_mood": "How's your mood?",
+    "q_phone_bed": "Did you use your phone in bed?",
+    "q_caffeine": "Caffeine after 2pm?",
+    "notes_placeholder": "Any notes? (optional)",
+    "quality_1": "Very poor",
+    "quality_5": "Excellent"
+  },
+
+  "report": {
+    "title": "Your Results",
+    "baseline": "Baseline (Days 1-3)",
+    "end": "End (Days 12-14)",
+    "improvement": "Improvement",
+    "total_sleep_time": "Total sleep",
+    "sleep_onset": "Time to fall asleep",
+    "awakenings": "Awakenings",
+    "minutes_more": "+{{minutes}} min",
+    "minutes_less": "-{{minutes}} min",
+    "coach_note": "Note from your coach",
+    "share": "Share results",
+    "download_pdf": "Download PDF"
+  },
+
+  "actions": {
+    "no_phone_bed_title": "No phone in bedroom",
+    "no_phone_bed_desc": "Leave your phone outside the bedroom tonight. Use a real alarm clock.",
+    "no_caffeine_title": "No caffeine after 2pm",
+    "no_caffeine_desc": "Skip coffee, tea, and energy drinks after 2pm today.",
+    "morning_light_title": "Morning light exposure",
+    "morning_light_desc": "Get 10 minutes of natural light within 30 minutes of waking.",
+    "cool_bedroom_title": "Cool down your bedroom",
+    "cool_bedroom_desc": "Set your bedroom to 18°C (65°F) before bed.",
+    "wind_down_title": "30-minute wind-down",
+    "wind_down_desc": "Start a calming routine 30 minutes before your target bedtime.",
+    "consistent_wake_title": "Consistent wake time",
+    "consistent_wake_desc": "Wake up at the same time, even on weekends.",
+    "no_alcohol_title": "Alcohol-free evening",
+    "no_alcohol_desc": "Skip alcohol tonight to improve sleep quality.",
+    "gratitude_title": "Gratitude practice",
+    "gratitude_desc": "Write down 3 things you're grateful for before bed.",
+    "body_scan_title": "Body scan relaxation",
+    "body_scan_desc": "Do a 5-minute body scan meditation in bed.",
+    "exercise_timing_title": "Exercise before 6pm",
+    "exercise_timing_desc": "Complete any intense exercise at least 4 hours before bed."
+  },
+
+  "coach": {
+    "dashboard_title": "Dashboard",
+    "your_clients": "Your clients",
+    "lead_requests": "Lead requests",
+    "pending": "Pending",
+    "accept": "Accept",
+    "decline": "Decline",
+    "expires_in": "Expires in {{hours}}h",
+    "auto_routed": "Auto-routed",
+    "client_status_green": "On track",
+    "client_status_yellow": "Needs attention",
+    "client_status_red": "At risk",
+    "set_action": "Set today's action",
+    "internal_note": "Internal note",
+    "internal_note_hint": "Only you can see this",
+    "report_comment": "Add comment to report",
+    "report_comment_hint": "Your client will see this"
+  },
+
+  "onboarding": {
+    "coach_title": "Become a Soomi Coach",
+    "instagram_login": "Connect with Instagram",
+    "profile_setup": "Set up your profile",
+    "languages_label": "Languages you coach in",
+    "style_label": "Your coaching style",
+    "style_scientific": "Scientific",
+    "style_mixed": "Mixed",
+    "style_spiritual": "Spiritual",
+    "focus_label": "Focus areas",
+    "capacity_label": "Max active clients",
+    "complete_setup": "Complete setup"
+  },
+
+  "programs": {
+    "sleep_reset_14": {
+      "name": "14-Day Sleep Reset",
+      "description": "Transform your sleep in just 14 days with personalized coaching and daily actions.",
+      "short": "Reset your sleep with a coach",
+      "variant_standard": "Standard"
+    },
+    "kickstart_7": {
+      "name": "Sleep Kickstart",
+      "description": "A quick 7-day self-guided program to build better sleep habits.",
+      "short": "Self-guided starter program"
+    },
+    "deep_reset_28": {
+      "name": "Deep Sleep Reset",
+      "description": "An intensive 28-day transformation with premium coaching support.",
+      "short": "Premium 28-day coaching"
+    },
+    "repeat_reset_10": {
+      "name": "Repeat Reset",
+      "description": "A focused 10-day refresh for returning users.",
+      "short": "Maintenance program"
+    },
+    "recommend": {
+      "default": "This program might be right for you",
+      "kickstart_new_user": "Perfect for getting started",
+      "reset_new_user": "Recommended for you",
+      "reset_poor_sleep": "Recommended based on your sleep data",
+      "repeat_returning": "Welcome back! Maintain your progress",
+      "deep_after_reset": "Ready for the next level?",
+      "kickstart_moderate": "Good start for moderate sleep issues",
+      "deep_optimize": "Optimize your already good sleep",
+      "repeat_after_gap": "Time for a refresh",
+      "coach_recommended": "Recommended by your coach"
+    }
+  },
+
+  "eligibility": {
+    "active_program_exists": "You already have an active program",
+    "repeat_program_requires_previous": "This program is for returning users",
+    "prerequisite_not_completed": "Complete {{prerequisite}} first",
+    "program_for_new_users_only": "This program is for new users",
+    "program_for_returning_users_only": "This program is for returning users",
+    "program_not_yet_available": "Coming soon",
+    "program_no_longer_available": "This program is no longer available"
+  },
+
+  "errors": {
+    "network": "Connection error. Please check your internet.",
+    "auth_failed": "Authentication failed",
+    "sync_failed": "Sync failed. Please try again.",
+    "generic": "Something went wrong"
+  },
+
+  "gdpr": {
+    "consent_title": "Your data, your choice",
+    "consent_text": "We process your sleep data to provide personalized insights. Your data is never sold.",
+    "consent_data": "I agree to data processing for sleep analysis",
+    "consent_marketing": "Send me tips and updates (optional)",
+    "privacy_policy": "Privacy Policy",
+    "delete_account": "Delete my account",
+    "delete_confirm": "This will permanently delete all your data. Are you sure?"
+  }
+}

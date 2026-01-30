@@ -1,0 +1,556 @@
+// ═══════════════════════════════════════════════════════════
+// SOOMI DATABASE SCHEMA v1.0
+// Multi-Program Ready Architecture
+// ═══════════════════════════════════════════════════════════
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ═══════════════════════════════════════════════════════════
+// USER & AUTH
+// ═══════════════════════════════════════════════════════════
+
+model User {
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  emailVerified       DateTime?
+  locale              String    @default("de-DE")
+  timezone            String    @default("Europe/Berlin")
+  
+  // GDPR
+  dataConsentAt       DateTime?
+  marketingConsentAt  DateTime?
+  deletedAt           DateTime?
+  
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  
+  // Relations
+  coachProfile        CoachProfile?
+  programInstances    ProgramInstance[]
+  sleepSessions       SleepSessionNormalized[]
+  magicLinks          MagicLink[]
+  attribution         Attribution?
+
+  @@map("users")
+}
+
+model MagicLink {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+  
+  @@index([token])
+  @@index([userId])
+  @@map("magic_links")
+}
+
+// ═══════════════════════════════════════════════════════════
+// COACH
+// ═══════════════════════════════════════════════════════════
+
+model CoachProfile {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Profile
+  displayName       String
+  instagramHandle   String?
+  avatarUrl         String?
+  bio               String?  @db.VarChar(500)
+  
+  // Matching-Kriterien
+  languages         String[] // ["de", "en", "nl"]
+  style             CoachStyle @default(MIXED)
+  focusTags         String[] // ["stress", "shift-work", "parents"]
+  
+  // Kapazität
+  maxActiveClients  Int      @default(10)
+  status            CoachStatus @default(OPEN)
+  
+  // Performance (für Matching-Fairness)
+  responseScore     Float    @default(1.0)
+  assignedCount     Int      @default(0)
+  
+  // Referral
+  referralCode      String   @unique @default(cuid())
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relations
+  clients           ProgramInstance[]
+  leadRequests      LeadRequest[]
+  ledgerEntries     LedgerEntry[]
+  internalNotes     CoachInternalNote[]
+
+  @@map("coach_profiles")
+}
+
+enum CoachStyle {
+  SCIENTIFIC
+  MIXED
+  SPIRITUAL
+}
+
+enum CoachStatus {
+  OPEN
+  FULL
+  PAUSED
+}
+
+// ═══════════════════════════════════════════════════════════
+// ATTRIBUTION & LEADS
+// ═══════════════════════════════════════════════════════════
+
+model Attribution {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  source          AttributionSource
+  referralCode    String?
+  coachId         String?
+  
+  // 90-Tage-Fenster
+  attributedAt    DateTime  @default(now())
+  expiresAt       DateTime
+  
+  createdAt       DateTime  @default(now())
+
+  @@map("attributions")
+}
+
+enum AttributionSource {
+  COACH_LINK
+  SOOMI_ASSIGNED
+  ORGANIC
+}
+
+model LeadRequest {
+  id              String    @id @default(cuid())
+  userId          String
+  coachId         String
+  coach           CoachProfile @relation(fields: [coachId], references: [id])
+  
+  status          LeadRequestStatus @default(PENDING)
+  
+  // 48h Timer
+  createdAt       DateTime  @default(now())
+  expiresAt       DateTime
+  respondedAt     DateTime?
+  
+  declineReason   String?   @db.VarChar(200)
+  
+  // Routing-History
+  routingAttempt  Int       @default(1)
+  previousCoachId String?
+  
+  @@index([coachId, status])
+  @@index([expiresAt])
+  @@map("lead_requests")
+}
+
+enum LeadRequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  EXPIRED
+  AUTO_ROUTED
+}
+
+// ═══════════════════════════════════════════════════════════
+// PROGRAM TEMPLATES (Multi-Program Ready)
+// ═══════════════════════════════════════════════════════════
+
+model ProgramTemplate {
+  id                  String    @id @default(cuid())
+  
+  slug                String    @unique
+  nameKey             String
+  descriptionKey      String
+  shortDescKey        String
+  
+  // Konfiguration
+  durationDays        Int
+  coachRequired       Boolean   @default(true)
+  coachIntensity      CoachIntensity @default(DAILY)
+  
+  // Pricing
+  priceEuroCents      Int
+  coachDirectSplit    Int       @default(80)
+  soomiAssignedSplit  Int       @default(50)
+  
+  // Content-Regeln
+  allowedActionIds    String[]
+  checkInConfig       Json
+  reportType          ReportType @default(STANDARD)
+  
+  // Targeting
+  targetAudience      TargetAudience @default(ALL)
+  isRepeatProgram     Boolean   @default(false)
+  prerequisiteSlug    String?
+  
+  // Status
+  isActive            Boolean   @default(true)
+  isPublic            Boolean   @default(true)
+  sortOrder           Int       @default(0)
+  
+  // Zeitraum
+  availableFrom       DateTime?
+  availableUntil      DateTime?
+  
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  
+  // Relations
+  instances           ProgramInstance[]
+  variants            ProgramVariant[]
+
+  @@map("program_templates")
+}
+
+enum CoachIntensity {
+  NONE
+  LIGHT
+  DAILY
+  INTENSIVE
+}
+
+enum ReportType {
+  MINI
+  STANDARD
+  DETAILED
+}
+
+enum TargetAudience {
+  ALL
+  NEW_USERS
+  RETURNING_USERS
+  COACH_RECOMMENDED
+}
+
+model ProgramVariant {
+  id                  String    @id @default(cuid())
+  templateId          String
+  template            ProgramTemplate @relation(fields: [templateId], references: [id])
+  
+  slug                String    @unique
+  nameKey             String
+  
+  priceEuroCents      Int
+  originalPrice       Int?
+  
+  validFrom           DateTime?
+  validUntil          DateTime?
+  maxRedemptions      Int?
+  currentRedemptions  Int       @default(0)
+  
+  promoCode           String?   @unique
+  
+  isActive            Boolean   @default(true)
+  
+  createdAt           DateTime  @default(now())
+
+  @@map("program_variants")
+}
+
+// ═══════════════════════════════════════════════════════════
+// PROGRAM INSTANCE
+// ═══════════════════════════════════════════════════════════
+
+model ProgramInstance {
+  id                  String    @id @default(cuid())
+  
+  userId              String
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coachId             String?
+  coach               CoachProfile? @relation(fields: [coachId], references: [id])
+  
+  templateId          String
+  template            ProgramTemplate @relation(fields: [templateId], references: [id])
+  variantId           String?
+  
+  // Snapshot der Konfiguration zum Kaufzeitpunkt
+  configSnapshot      Json
+  
+  // Status
+  status              ProgramStatus @default(PENDING_PAYMENT)
+  currentDay          Int       @default(0)
+  
+  // Zeitraum
+  startedAt           DateTime?
+  completedAt         DateTime?
+  
+  // Bezahlung
+  paidAt              DateTime?
+  paidAmount          Int?
+  paymentRef          String?
+  
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  
+  // Relations
+  days                ProgramDay[]
+  report              ProgramReport?
+  
+  @@index([userId])
+  @@index([coachId])
+  @@index([templateId])
+  @@map("program_instances")
+}
+
+enum ProgramStatus {
+  PENDING_PAYMENT
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+model ProgramDay {
+  id                String    @id @default(cuid())
+  programInstanceId String
+  programInstance   ProgramInstance @relation(fields: [programInstanceId], references: [id], onDelete: Cascade)
+  
+  dayNumber         Int
+  date              DateTime  @db.Date
+  
+  actionTemplateId  String?
+  actionTemplate    DailyActionTemplate? @relation(fields: [actionTemplateId], references: [id])
+  actionCompletedAt DateTime?
+  
+  checkIn           DailyCheckIn?
+  
+  createdAt         DateTime  @default(now())
+  
+  @@unique([programInstanceId, dayNumber])
+  @@index([programInstanceId])
+  @@map("program_days")
+}
+
+// ═══════════════════════════════════════════════════════════
+// DAILY ACTIONS
+// ═══════════════════════════════════════════════════════════
+
+model DailyActionTemplate {
+  id            String    @id @default(cuid())
+  
+  titleKey      String
+  descriptionKey String
+  
+  category      ActionCategory
+  difficulty    Int       @default(1)
+  timingHint    ActionTiming?
+  
+  isActive      Boolean   @default(true)
+  sortOrder     Int       @default(0)
+  
+  programDays   ProgramDay[]
+
+  @@map("daily_action_templates")
+}
+
+enum ActionCategory {
+  LIGHT
+  ROUTINE
+  ENVIRONMENT
+  MINDSET
+  NUTRITION
+  MOVEMENT
+}
+
+enum ActionTiming {
+  MORNING
+  AFTERNOON
+  EVENING
+  BEDTIME
+  ANYTIME
+}
+
+// ═══════════════════════════════════════════════════════════
+// CHECK-IN
+// ═══════════════════════════════════════════════════════════
+
+model CheckInQuestion {
+  id                  String    @id @default(cuid())
+  
+  slug                String    @unique
+  questionKey         String
+  questionType        QuestionType
+  options             Json?
+  metricKey           String?
+  
+  isActive            Boolean   @default(true)
+  sortOrder           Int       @default(0)
+
+  @@map("checkin_questions")
+}
+
+enum QuestionType {
+  SCALE_1_5
+  BOOLEAN
+  SINGLE_CHOICE
+  MULTI_CHOICE
+  FREE_TEXT
+}
+
+model DailyCheckIn {
+  id              String    @id @default(cuid())
+  programDayId    String    @unique
+  programDay      ProgramDay @relation(fields: [programDayId], references: [id], onDelete: Cascade)
+  
+  // Dynamische Antworten
+  answers         Json
+  
+  notes           String?   @db.VarChar(500)
+  
+  completedAt     DateTime  @default(now())
+
+  @@map("daily_checkins")
+}
+
+// ═══════════════════════════════════════════════════════════
+// SLEEP DATA
+// ═══════════════════════════════════════════════════════════
+
+model SleepSessionNormalized {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  source          SleepDataSource
+  externalId      String?
+  
+  date            DateTime  @db.Date
+  bedtimeStart    DateTime
+  bedtimeEnd      DateTime
+  
+  // Metriken (in Minuten)
+  totalSleepTime  Int
+  sleepOnsetLatency Int?
+  wakeAfterSleepOnset Int?
+  awakenings      Int?
+  
+  // Phasen (optional, für v1.1+)
+  deepSleepMins   Int?
+  remSleepMins    Int?
+  lightSleepMins  Int?
+  
+  subjectiveQuality Int?
+  
+  syncedAt        DateTime  @default(now())
+  
+  @@unique([userId, date, source])
+  @@index([userId, date])
+  @@map("sleep_sessions")
+}
+
+enum SleepDataSource {
+  MANUAL
+  GOOGLE_FIT
+  FITBIT
+  APPLE_HEALTH
+}
+
+// ═══════════════════════════════════════════════════════════
+// COACH NOTES & REPORTS
+// ═══════════════════════════════════════════════════════════
+
+model CoachInternalNote {
+  id              String    @id @default(cuid())
+  coachId         String
+  coach           CoachProfile @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  clientUserId    String
+  
+  content         String    @db.VarChar(500)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([coachId, clientUserId])
+  @@map("coach_internal_notes")
+}
+
+model ProgramReport {
+  id                String    @id @default(cuid())
+  programInstanceId String    @unique
+  programInstance   ProgramInstance @relation(fields: [programInstanceId], references: [id], onDelete: Cascade)
+  
+  // Generierte Metriken
+  baselineTST       Int?
+  endTST            Int?
+  baselineSOL       Int?
+  endSOL            Int?
+  baselineAwakenings Float?
+  endAwakenings     Float?
+  
+  // Berechnete Verbesserungen
+  tstImprovement    Int?
+  solImprovement    Int?
+  awakeningsChange  Float?
+  
+  // Streak & Compliance
+  streakMax         Int       @default(0)
+  checkInRate       Float?
+  actionCompleteRate Float?
+  
+  // Coach-Kommentar
+  coachComment      String?   @db.VarChar(500)
+  
+  generatedAt       DateTime  @default(now())
+
+  @@map("program_reports")
+}
+
+// ═══════════════════════════════════════════════════════════
+// PAYMENTS & LEDGER
+// ═══════════════════════════════════════════════════════════
+
+model LedgerEntry {
+  id              String    @id @default(cuid())
+  
+  programInstanceId String
+  coachId         String?
+  coach           CoachProfile? @relation(fields: [coachId], references: [id])
+  
+  // Beträge (in Cents)
+  grossAmount     Int
+  coachAmount     Int
+  platformAmount  Int
+  affiliateAmount Int       @default(0)
+  
+  splitType       PayoutSplitType
+  
+  status          LedgerStatus @default(PENDING)
+  paidOutAt       DateTime?
+  payoutRef       String?
+  
+  createdAt       DateTime  @default(now())
+  
+  @@index([coachId])
+  @@index([status])
+  @@map("ledger_entries")
+}
+
+enum PayoutSplitType {
+  COACH_DIRECT
+  SOOMI_ASSIGNED
+}
+
+enum LedgerStatus {
+  PENDING
+  APPROVED
+  PAID_OUT
+  CANCELLED
+}

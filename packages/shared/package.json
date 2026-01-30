@@ -1,0 +1,22 @@
+{
+  "name": "@soomi/shared",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "i18n:validate": "ts-node src/i18n/validation.ts",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "i18next": "^23.7.0",
+    "react-i18next": "^14.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.3.0"
+  }
+}

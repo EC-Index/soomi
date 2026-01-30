@@ -1,0 +1,245 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "error": "Ein Fehler ist aufgetreten",
+    "retry": "Erneut versuchen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "done": "Fertig",
+    "skip": "Überspringen",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+
+  "auth": {
+    "welcome_title": "Willkommen bei Soomi",
+    "welcome_subtitle": "Dein Weg zu besserem Schlaf",
+    "email_placeholder": "Deine E-Mail-Adresse",
+    "send_magic_link": "Login-Link senden",
+    "check_email": "Prüfe dein Postfach",
+    "magic_link_sent": "Wir haben dir einen Login-Link an {{email}} gesendet",
+    "link_expired": "Dieser Link ist abgelaufen",
+    "request_new_link": "Neuen Link anfordern"
+  },
+
+  "home": {
+    "greeting_morning": "Guten Morgen",
+    "greeting_afternoon": "Guten Tag",
+    "greeting_evening": "Guten Abend",
+    "last_night": "Letzte Nacht",
+    "weekly_average": "7-Tage Durchschnitt",
+    "hours_slept": "{{hours}}h {{minutes}}m",
+    "streak_days": "{{count}} Tag Streak",
+    "streak_days_plural": "{{count}} Tage Streak",
+    "quick_actions": "Schnellaktionen",
+    "track_sleep": "Schlaf tracken",
+    "play_sounds": "Einschlafklänge",
+    "your_program": "Dein Programm"
+  },
+
+  "tracking": {
+    "title": "Schlaf tracken",
+    "manual_entry": "Manueller Eintrag",
+    "wearable_sync": "Wearable verbinden",
+    "last_sync": "Zuletzt synchronisiert {{time}}",
+    "sync_now": "Jetzt synchronisieren",
+    "syncing": "Synchronisiere...",
+    "sync_success": "{{count}} Nächte synchronisiert",
+    "bedtime_label": "Eingeschlafen",
+    "waketime_label": "Aufgewacht",
+    "awakenings_label": "Aufgewacht in der Nacht",
+    "quality_label": "Wie hast du geschlafen?",
+    "quality_1": "Sehr schlecht",
+    "quality_2": "Schlecht",
+    "quality_3": "Okay",
+    "quality_4": "Gut",
+    "quality_5": "Ausgezeichnet"
+  },
+
+  "sounds": {
+    "title": "Einschlafklänge",
+    "ocean_calm": "Ruhiger Ozean",
+    "ocean_waves": "Meereswellen",
+    "ocean_storm": "Fernes Gewitter",
+    "timer_label": "Timer",
+    "timer_minutes": "{{minutes}} Min",
+    "fade_out": "Ausblenden",
+    "now_playing": "Wird abgespielt"
+  },
+
+  "insights": {
+    "title": "Insights",
+    "this_week": "Diese Woche",
+    "total_sleep": "Schlafdauer",
+    "time_to_fall_asleep": "Einschlafzeit",
+    "awakenings": "Aufwachen",
+    "trend_improving": "Verbesserung",
+    "trend_stable": "Stabil",
+    "trend_declining": "Aufmerksamkeit nötig"
+  },
+
+  "program": {
+    "title": "14-Tage Schlaf-Reset",
+    "day_x_of_14": "Tag {{day}} von 14",
+    "today_action": "Heutige Aktion",
+    "action_complete": "Als erledigt markieren",
+    "action_completed": "Erledigt!",
+    "daily_checkin": "Täglicher Check-in",
+    "checkin_time": "~30 Sekunden",
+    "checkin_done": "Check-in abgeschlossen",
+    "report_available": "Dein Report ist fertig!",
+    "view_report": "Report ansehen",
+    "not_started": "Noch nicht gestartet",
+    "start_program": "Starte dein Reset",
+    "price": "199€"
+  },
+
+  "checkin": {
+    "title": "Täglicher Check-in",
+    "q_sleep_quality": "Wie hast du letzte Nacht geschlafen?",
+    "q_energy": "Wie ist dein Energielevel heute?",
+    "q_mood": "Wie ist deine Stimmung?",
+    "q_phone_bed": "Hast du dein Handy im Bett benutzt?",
+    "q_caffeine": "Koffein nach 14 Uhr?",
+    "notes_placeholder": "Notizen? (optional)",
+    "quality_1": "Sehr schlecht",
+    "quality_5": "Ausgezeichnet"
+  },
+
+  "report": {
+    "title": "Deine Ergebnisse",
+    "baseline": "Baseline (Tage 1-3)",
+    "end": "Ende (Tage 12-14)",
+    "improvement": "Verbesserung",
+    "total_sleep_time": "Schlafdauer",
+    "sleep_onset": "Einschlafzeit",
+    "awakenings": "Aufwachen",
+    "minutes_more": "+{{minutes}} Min",
+    "minutes_less": "-{{minutes}} Min",
+    "coach_note": "Nachricht von deinem Coach",
+    "share": "Ergebnisse teilen",
+    "download_pdf": "PDF herunterladen"
+  },
+
+  "actions": {
+    "no_phone_bed_title": "Kein Handy im Schlafzimmer",
+    "no_phone_bed_desc": "Lass dein Handy heute Nacht außerhalb des Schlafzimmers. Nutze einen echten Wecker.",
+    "no_caffeine_title": "Kein Koffein nach 14 Uhr",
+    "no_caffeine_desc": "Verzichte heute auf Kaffee, Tee und Energy Drinks nach 14 Uhr.",
+    "morning_light_title": "Morgenlicht",
+    "morning_light_desc": "Gönn dir innerhalb von 30 Minuten nach dem Aufwachen 10 Minuten natürliches Licht.",
+    "cool_bedroom_title": "Schlafzimmer kühlen",
+    "cool_bedroom_desc": "Stelle dein Schlafzimmer vor dem Schlafengehen auf 18°C ein.",
+    "wind_down_title": "30 Minuten Entspannung",
+    "wind_down_desc": "Beginne 30 Minuten vor deiner Ziel-Schlafenszeit mit einer ruhigen Routine.",
+    "consistent_wake_title": "Konstante Aufwachzeit",
+    "consistent_wake_desc": "Wache jeden Tag zur gleichen Zeit auf, auch am Wochenende.",
+    "no_alcohol_title": "Alkoholfreier Abend",
+    "no_alcohol_desc": "Verzichte heute Abend auf Alkohol für bessere Schlafqualität.",
+    "gratitude_title": "Dankbarkeits-Übung",
+    "gratitude_desc": "Schreibe vor dem Schlafengehen 3 Dinge auf, für die du dankbar bist.",
+    "body_scan_title": "Body Scan",
+    "body_scan_desc": "Mache eine 5-minütige Body Scan Meditation im Bett.",
+    "exercise_timing_title": "Sport vor 18 Uhr",
+    "exercise_timing_desc": "Schließe intensives Training mindestens 4 Stunden vor dem Schlafengehen ab."
+  },
+
+  "coach": {
+    "dashboard_title": "Dashboard",
+    "your_clients": "Deine Klienten",
+    "lead_requests": "Anfragen",
+    "pending": "Ausstehend",
+    "accept": "Annehmen",
+    "decline": "Ablehnen",
+    "expires_in": "Läuft ab in {{hours}}h",
+    "auto_routed": "Automatisch weitergeleitet",
+    "client_status_green": "Auf Kurs",
+    "client_status_yellow": "Aufmerksamkeit nötig",
+    "client_status_red": "Gefährdet",
+    "set_action": "Heutige Aktion setzen",
+    "internal_note": "Interne Notiz",
+    "internal_note_hint": "Nur du siehst das",
+    "report_comment": "Kommentar zum Report",
+    "report_comment_hint": "Dein Klient sieht das"
+  },
+
+  "onboarding": {
+    "coach_title": "Werde Soomi Coach",
+    "instagram_login": "Mit Instagram verbinden",
+    "profile_setup": "Profil einrichten",
+    "languages_label": "Sprachen für Coaching",
+    "style_label": "Dein Coaching-Stil",
+    "style_scientific": "Wissenschaftlich",
+    "style_mixed": "Gemischt",
+    "style_spiritual": "Spirituell",
+    "focus_label": "Schwerpunkte",
+    "capacity_label": "Max. aktive Klienten",
+    "complete_setup": "Setup abschließen"
+  },
+
+  "programs": {
+    "sleep_reset_14": {
+      "name": "14-Tage Schlaf-Reset",
+      "description": "Transformiere deinen Schlaf in nur 14 Tagen mit persönlichem Coaching und täglichen Aktionen.",
+      "short": "Reset mit Coach",
+      "variant_standard": "Standard"
+    },
+    "kickstart_7": {
+      "name": "Sleep Kickstart",
+      "description": "Ein schnelles 7-Tage Selbstlern-Programm für bessere Schlafgewohnheiten.",
+      "short": "Selbstgeführtes Starter-Programm"
+    },
+    "deep_reset_28": {
+      "name": "Deep Sleep Reset",
+      "description": "Eine intensive 28-Tage Transformation mit Premium-Coaching.",
+      "short": "Premium 28-Tage Coaching"
+    },
+    "repeat_reset_10": {
+      "name": "Repeat Reset",
+      "description": "Ein fokussierter 10-Tage Auffrischungskurs für Rückkehrer.",
+      "short": "Auffrischungs-Programm"
+    },
+    "recommend": {
+      "default": "Dieses Programm könnte zu dir passen",
+      "kickstart_new_user": "Perfekt zum Einstieg",
+      "reset_new_user": "Empfohlen für dich",
+      "reset_poor_sleep": "Basierend auf deinen Schlafdaten empfohlen",
+      "repeat_returning": "Willkommen zurück! Halte deinen Fortschritt",
+      "deep_after_reset": "Bereit für das nächste Level?",
+      "kickstart_moderate": "Guter Start für moderate Schlafprobleme",
+      "deep_optimize": "Optimiere deinen bereits guten Schlaf",
+      "repeat_after_gap": "Zeit für eine Auffrischung",
+      "coach_recommended": "Von deinem Coach empfohlen"
+    }
+  },
+
+  "eligibility": {
+    "active_program_exists": "Du hast bereits ein aktives Programm",
+    "repeat_program_requires_previous": "Dieses Programm ist für Rückkehrer",
+    "prerequisite_not_completed": "Schließe zuerst {{prerequisite}} ab",
+    "program_for_new_users_only": "Dieses Programm ist für neue Nutzer",
+    "program_for_returning_users_only": "Dieses Programm ist für Rückkehrer",
+    "program_not_yet_available": "Demnächst verfügbar",
+    "program_no_longer_available": "Dieses Programm ist nicht mehr verfügbar"
+  },
+
+  "errors": {
+    "network": "Verbindungsfehler. Bitte prüfe deine Internetverbindung.",
+    "auth_failed": "Authentifizierung fehlgeschlagen",
+    "sync_failed": "Synchronisierung fehlgeschlagen. Bitte erneut versuchen.",
+    "generic": "Etwas ist schiefgelaufen"
+  },
+
+  "gdpr": {
+    "consent_title": "Deine Daten, deine Wahl",
+    "consent_text": "Wir verarbeiten deine Schlafdaten für personalisierte Insights. Deine Daten werden niemals verkauft.",
+    "consent_data": "Ich stimme der Datenverarbeitung für Schlafanalyse zu",
+    "consent_marketing": "Tipps und Updates senden (optional)",
+    "privacy_policy": "Datenschutzerklärung",
+    "delete_account": "Mein Konto löschen",
+    "delete_confirm": "Dies löscht alle deine Daten dauerhaft. Bist du sicher?"
+  }
+}
