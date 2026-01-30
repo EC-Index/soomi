@@ -16,8 +16,6 @@ import {
   activeInstance,
   createInstance,
   allTemplates,
-  inactiveProgram,
-  expiredProgram,
 } from './__fixtures__';
 import { ProgramStatus } from '@soomi/shared';
 
@@ -53,7 +51,7 @@ describe('recommendPrograms', () => {
       expect(sleepResetRec!.priority).toBe('secondary');
     });
 
-    it('sollte Repeat Reset NICHT empfehlen', () => {
+    it('sollte Repeat Reset NICHT empfehlen (nicht public)', () => {
       const recommendations = recommendPrograms(baseContext);
 
       const repeatRec = recommendations.find(
@@ -108,8 +106,8 @@ describe('recommendPrograms', () => {
       activeProgram: null,
     };
 
-    it('sollte Repeat Reset empfehlen', () => {
-      const recommendations = recommendPrograms(baseContext);
+    it('sollte Repeat Reset empfehlen wenn includeNonPublic=true', () => {
+      const recommendations = recommendPrograms(baseContext, { includeNonPublic: true });
 
       const repeatRec = recommendations.find(
         (r) => r.templateSlug === 'repeat-reset-10'
@@ -172,13 +170,13 @@ describe('recommendPrograms', () => {
       }
     });
 
-    it('sollte Boost anwenden wenn lange her (>90 Tage)', () => {
+    it('sollte Boost anwenden wenn lange her (>90 Tage) mit includeNonPublic', () => {
       const contextLongGap: RecommendationContext = {
         ...baseContext,
         daysSinceLastProgram: 120,
       };
 
-      const recommendations = recommendPrograms(contextLongGap);
+      const recommendations = recommendPrograms(contextLongGap, { includeNonPublic: true });
 
       const repeatRec = recommendations.find(
         (r) => r.templateSlug === 'repeat-reset-10'
@@ -268,46 +266,32 @@ describe('recommendPrograms', () => {
     });
 
     it('sollte nicht-öffentliche Programme ausschließen (default)', () => {
-      const templatesWithPrivate = [
-        ...allTemplates,
-        { ...sleepReset14, id: 'private_1', slug: 'private-program', isPublic: false },
-      ];
+      const recommendations = recommendPrograms(baseContext);
 
-      const context: RecommendationContext = {
-        ...baseContext,
-        templates: templatesWithPrivate,
-      };
-
-      const recommendations = recommendPrograms(context);
-
-      const privateRec = recommendations.find(
-        (r) => r.templateSlug === 'private-program'
+      // repeat-reset-10 ist nicht public
+      const repeatRec = recommendations.find(
+        (r) => r.templateSlug === 'repeat-reset-10'
       );
-      expect(privateRec).toBeUndefined();
+      expect(repeatRec).toBeUndefined();
     });
 
     it('sollte nicht-öffentliche Programme einschließen wenn konfiguriert', () => {
-      const privateTemplate = {
-        ...sleepReset14,
-        id: 'private_1',
-        slug: 'private-program',
-        isPublic: false,
-        isActive: true,
-      };
-
+      // Returning user damit repeat-reset eligible ist
       const context: RecommendationContext = {
-        ...baseContext,
-        templates: [...allTemplates, privateTemplate],
+        user: returningUser,
+        templates: allTemplates,
+        completedPrograms: [completedSleepReset],
+        activeProgram: null,
       };
 
       const recommendations = recommendPrograms(context, {
         includeNonPublic: true,
       });
 
-      const privateRec = recommendations.find(
-        (r) => r.templateSlug === 'private-program'
+      const repeatRec = recommendations.find(
+        (r) => r.templateSlug === 'repeat-reset-10'
       );
-      expect(privateRec).toBeDefined();
+      expect(repeatRec).toBeDefined();
     });
   });
 
